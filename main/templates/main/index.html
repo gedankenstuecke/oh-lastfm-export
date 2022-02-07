@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<h1 class="mt-5">LastFM Export for Open Humans</h1>
+
+{% if not request.user.is_authenticated %}
+<div class="row">
+  <div class="col-md">
+    <p>
+      By logging in with to your <i>Open Humans</i> account and entering your <i>LastFM</i> username this application will deposit a full copy of all your scrobbles in your private <i>Open Humans</i> storage.
+    </p>
+    <a href="{{ auth_url }}" class="btn btn-primary">
+      Connect to Open Humans
+    </a>
+  </div>
+  <div class="col-md">
+    <h2>What's this?</h2>
+    <p>
+    This integration is run by <a href="https://tzovar.as">Bastian Greshake Tzovaras</a>. Once set-up, this app will automatically keep an up-to-date copy of your scrobbles in your <i>Open Humans</i> account.
+    </p>
+  </div>
+</div>
+{% else %}
+
+<div class="row">
+  <div class="col-md">
+    <h2>You're logged in. </h2>
+      You can now add your <i>Last.fm</i> account by entering your username on the right. Once you've done so we will import a copy of your
+      full list of scrobbles from <i>Last.fm</i>.
+  </div>
+  <div class="col-md">
+  <h3>Add/edit your last.fm account</h3>
+  <p>
+  <form action="{% url 'create-lastfm' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label>Enter a new <i>last.fm</i> user name</label> <input class="form-control" name="username" size=60 type="text" value="{{lastfmuser}}" placeholder="Enter your last.fm username" required>
+    </div>
+    <input type="submit" class="btn btn-info" value="Update last.fm username">
+  </form>
+  </p>
+  <p>
+  <form action="{% url 'delete-lastfm' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Delete last.fm username">
+  </form>
+  </p>
+  </div>
+
+{% endif %}
+
+{% endblock main %}
