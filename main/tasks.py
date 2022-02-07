@@ -41,6 +41,7 @@ def last_fm_data(oh_member_id):
         p_url = user_url + "&page={}".format(i)
         page = requests.get(p_url).json()
         tracks = tracks + page['recenttracks']['track']
+    tracks = tracks + old_data
     with tempfile.TemporaryFile() as f:
         js = json.dumps(tracks)
         js = str.encode(js)
