@@ -8,7 +8,7 @@ def get_existing_file(oh_member):
         if f['basename'] == 'lastfm-data.json':
             data = json.loads(requests.get(f['download_url']).content)
             return data
-    return {}
+    return []
 
 
 def get_timestamp(data):
