@@ -149,3 +149,5 @@ LASTFM_KEY = os.getenv('LASTFM_KEY', 'key')
 
 import django_heroku
 django_heroku.settings(locals())
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

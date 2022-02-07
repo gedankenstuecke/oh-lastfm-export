@@ -8,6 +8,7 @@ from django.utils.safestring import mark_safe
 import json
 from openhumans.models import OpenHumansMember
 from .models import LastFmUser
+from .tasks import last_fm_data
 
 
 def index(request):
@@ -60,6 +61,7 @@ def create_lastfm(request):
         lastfm_user.oh_member = request.user.openhumansmember
         lastfm_user.username = request.POST.get('username')
         lastfm_user.save()
+        last_fm_data.delay(request.user.openhumansmember.oh_id)
     return redirect('/')
 
 
